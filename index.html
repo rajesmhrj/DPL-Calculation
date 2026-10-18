@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marriage Khata</title>
+  <meta name="description" content="The scorebook for our Marriage card nights: rules, every game, and who pays whom.">
+  <meta name="theme-color" content="#083d2f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Mukta:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <script>
+    // Old links to a player or head-to-head page went to the home page; send them to the ledger.
+    if (/^#(p|vs)=/.test(location.hash)) location.replace('/ledger' + location.hash);
+  </script>
+  <script src="/js/cards.js" defer></script>
+  <script src="/js/sim.js" defer></script>
+  <script src="/js/analytics.js" defer></script>
+  <script src="/js/home.js" defer></script>
+</head>
+<body class="site">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark">Marriage <span>Khata</span></span><span class="brand-dev" lang="ne">म्यारिज खाता</span></a>
+      <ul class="nav-links">
+        <li><a href="/" aria-current="page">Home</a></li>
+        <li><a href="/rules">Rules</a></li>
+        <li><a href="/watch">Watch</a></li>
+        <li><a class="nav-cta" href="/ledger">Ledger</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="felt hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1>Every hand counted. Every rupee settled.</h1>
+          <p>We play Marriage most evenings. This is our khata: drop in the final scoreboard and it keeps the running tally, works out who pays whom, and remembers who has been lucky on Fridays.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/ledger">Open the ledger</a>
+            <a class="button button-ghost" href="/rules">How to play</a>
+          </div>
+        </div>
+        <figure class="table" aria-labelledby="deal-caption">
+          <div class="deal" id="deal" aria-hidden="true"></div>
+          <figcaption id="deal-caption" class="deal-caption" aria-live="polite">Dealing 21 cards…</figcaption>
+          <button class="replay" id="replay" type="button" hidden>Deal again</button>
+        </figure>
+      </div>
+    </section>
+
+    <section class="wrap tally" id="tally" hidden aria-labelledby="tally-title">
+      <div class="tally-sheet">
+        <h2 id="tally-title">At the table so far</h2>
+        <dl class="tally-grid">
+          <div><dt>Games played</dt><dd id="t-games"></dd></div>
+          <div><dt>Out in front</dt><dd id="t-leader"></dd></div>
+          <div><dt>Most to win back</dt><dd id="t-trailer"></dd></div>
+          <div><dt>Last game</dt><dd id="t-last"></dd></div>
+        </dl>
+        <a class="tally-link" href="/ledger">See every game and who pays whom</a>
+      </div>
+    </section>
+
+    <section class="wrap steps" aria-labelledby="steps-title">
+      <h2 id="steps-title">How the ledger works</h2>
+      <ol class="step-list">
+        <li>
+          <h3>Snap the final scoreboard</h3>
+          <p>Screenshot the last screen of your Marriage point calculator and upload it. The Total Points row is read on your phone.</p>
+        </li>
+        <li>
+          <h3>Names match themselves</h3>
+          <p>"Raje.", "SARG" and even "Bhuj." land on the right player. If a name is new, pick it once and it's remembered for everyone.</p>
+        </li>
+        <li>
+          <h3>See who pays whom</h3>
+          <p>Games pile up until someone settles. The ledger shows the fewest payments that square everyone up.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="wrap minute" aria-labelledby="minute-title">
+      <div class="minute-text">
+        <h2 id="minute-title">Marriage in a minute</h2>
+        <p>Three decks, 21 cards each. Draw, discard, and build your hand into runs of the same suit and sets of identical cards.</p>
+        <p>Lay down three of them and you're <strong>seen</strong>: you get to look at the joker card, the <strong>tiplu</strong>. The tiplu and the cards beside it are <strong>maal</strong>, and maal is money.</p>
+        <p>First to turn all 21 cards into sets wins the hand. Everyone settles maal with everyone else, and anyone still unseen pays extra.</p>
+        <div class="minute-actions">
+          <a class="button button-ink" href="/rules">Read the full rules</a>
+          <a class="button button-ink" href="/watch">Watch a game</a>
+        </div>
+      </div>
+      <div class="minute-cards" id="minute-cards" aria-label="Example: the tiplu and its maal"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>Made for our Marriage nights. Every table plays a little differently; these are our rules.</span>
+      <a href="/ledger">Go to the ledger</a>
+    </div>
+  </footer>
+</body>
+</html>

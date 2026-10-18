@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ledger · Marriage Khata</title>
+  <meta name="theme-color" content="#083d2f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Mukta:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+  <script src="/js/core.js" defer></script>
+  <script src="/js/analytics.js" defer></script>
+  <script src="/js/charts.js" defer></script>
+  <script src="/js/stats.js" defer></script>
+  <script src="/js/scoring.js" defer></script>
+  <script src="/js/app.js" defer></script>
+  <script src="/js/scorer.js" defer></script>
+</head>
+<body class="site">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark">Marriage <span>Khata</span></span><span class="brand-dev" lang="ne">म्यारिज खाता</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/rules">Rules</a></li>
+        <li><a href="/watch">Watch</a></li>
+        <li><a class="nav-cta" href="/ledger" aria-current="page">Ledger</a></li>
+      </ul>
+    </div>
+  </header>
+  <section class="felt ledger-head">
+    <div class="wrap ledger-head-inner">
+      <div>
+        <h1>The ledger</h1>
+        <p>Every game we've played, who's up, who's down, and who pays whom.</p>
+      </div>
+      <label class="rate" title="Used for games that don't have their own rate">Usual rate Rs. <input id="rate" type="number" min="1" step="1" value="10"> per point</label>
+    </div>
+  </section>
+
+  <main id="main">
+    <section class="card">
+      <h2>1. Shared ledger</h2>
+      <p class="hint">Everyone with this link sees the same games and settlement — nobody else needs to upload anything. The ledger is an Excel file saved in the GitHub repo.</p>
+      <div class="actions">
+        <button id="refresh" class="btn">Refresh</button>
+        <button id="xlsx-out" class="btn primary">Download Excel</button>
+        <label class="btn">Replace from Excel<input id="xlsx-in" type="file" accept=".xlsx,.xls" hidden></label>
+        <button id="clear" class="btn danger">Clear all</button>
+      </div>
+      <p id="ledger-status" class="hint"></p>
+    </section>
+
+    <section class="card">
+      <h2>2. Add games</h2>
+      <label id="drop" class="drop">
+        <input id="photos" type="file" accept="image/*" multiple hidden>
+        <strong>Upload scoreboard screenshots</strong>
+        <span>Tap to choose, or drop images here. The Total Points row is read automatically.</span>
+      </label>
+      <div class="add-actions">
+        <button id="live-open" class="btn primary" type="button">Score a game live</button>
+        <button id="manual" class="btn">+ Enter a game manually</button>
+      </div>
+      <div id="pending"></div>
+    </section>
+
+    <section class="card">
+      <h2>Players</h2>
+      <div id="players" class="chips"></div>
+      <form id="add-player" class="add-player">
+        <input id="new-player" type="text" placeholder="New player name" maxlength="30" autocomplete="off">
+        <button class="btn">Add player</button>
+      </form>
+      <p class="hint">Adding or removing players asks for the edit password. Players who have played a game can't be removed.</p>
+    </section>
+
+    <section class="card">
+      <h2>3. Games</h2>
+      <div class="table-wrap"><table id="games"></table></div>
+    </section>
+
+    <section class="card">
+      <h2>4. Settlement</h2>
+      <div id="balances"></div>
+      <ol id="transfers" class="transfers"></ol>
+      <button id="copy" class="btn">Copy as text</button>
+      <p class="hint">Tap a name for that player's stats.</p>
+    </section>
+
+    <section class="card">
+      <h2>5. Stats</h2>
+      <div id="stats"></div>
+    </section>
+  </main>
+
+  <div id="live" class="detail live" role="dialog" aria-modal="true" aria-labelledby="live-title" hidden>
+    <div class="detail-bar">
+      <button id="live-close" class="detail-back" type="button" aria-label="Close the scorer (the game stays saved on this phone)">←</button>
+      <h2 id="live-title">Score a game</h2>
+    </div>
+    <div id="live-body" class="detail-body"></div>
+  </div>
+
+  <div id="detail" class="detail" role="dialog" aria-modal="true" aria-labelledby="detail-title" hidden>
+    <div class="detail-bar">
+      <button id="detail-back" class="detail-back" type="button" aria-label="Back">←</button>
+      <h2 id="detail-title"></h2>
+    </div>
+    <div id="detail-body" class="detail-body"></div>
+  </div>
+
+  <template id="review-tpl">
+    <div class="review">
+      <div class="review-head">
+        <img alt="">
+        <div class="review-meta">
+          <label>Game date <input type="datetime-local" class="date"></label>
+          <label>Rs. per point <input type="number" class="game-rate" min="0.01" step="any" inputmode="decimal"></label>
+          <p class="status"></p>
+        </div>
+      </div>
+      <ul class="warnings"></ul>
+      <table class="cols"><thead><tr><th>Read as</th><th>Player</th><th>Points</th><th></th></tr></thead><tbody></tbody></table>
+      <div class="review-foot">
+        <button class="btn add-col">+ Player</button>
+        <span class="sum"></span>
+        <button class="btn discard">Discard</button>
+        <button class="btn primary save">Add game</button>
+      </div>
+    </div>
+  </template>
+</body>
+</html>

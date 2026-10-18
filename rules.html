@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to play Marriage · Marriage Khata</title>
+  <meta name="description" content="The rules of Marriage, the Nepali 21-card rummy game: dealing, sequences, getting seen, tiplu and maal, dublee, murder and how points are scored.">
+  <meta name="theme-color" content="#083d2f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Mukta:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/rules.css">
+  <script src="/js/cards.js" defer></script>
+  <script src="/js/rules.js" defer></script>
+</head>
+<body class="site">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark">Marriage <span>Khata</span></span><span class="brand-dev" lang="ne">म्यारिज खाता</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/rules" aria-current="page">Rules</a></li>
+        <li><a href="/watch">Watch</a></li>
+        <li><a class="nav-cta" href="/ledger">Ledger</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="felt rules-head">
+      <div class="wrap">
+        <h1>How to play Marriage</h1>
+        <p>Marriage is Nepal's favourite rummy: three decks, 21 cards each, and a joker that only the players who've shown their hand get to see. Here's how a hand goes, and how we turn it into points.</p>
+      </div>
+    </section>
+
+    <div class="wrap rules-layout">
+      <nav class="toc" aria-label="On this page">
+        <ol>
+          <li><a href="#deal">The deal</a></li>
+          <li><a href="#turn">Your turn</a></li>
+          <li><a href="#sets">Building sets</a></li>
+          <li><a href="#seen">Getting seen</a></li>
+          <li><a href="#maal">Tiplu and maal</a></li>
+          <li><a href="#power">Superman and Putalis</a></li>
+          <li><a href="#dublee">Playing dublee</a></li>
+          <li><a href="#finish">Finishing a hand</a></li>
+          <li><a href="#modes">Murder and kidnap</a></li>
+          <li><a href="#points">Scoring a hand</a></li>
+          <li><a href="#money">From points to rupees</a></li>
+        </ol>
+      </nav>
+
+      <article class="rules">
+        <section id="deal">
+          <h2>The deal</h2>
+          <p>Shuffle three standard decks together: 156 cards. Two to five people can play; bigger tables add a fourth deck.</p>
+          <p>Everyone gets <strong>21 cards</strong>. One card goes face down in the middle: that's the <strong>joker</strong>, called the tiplu, and nobody looks at it yet. The rest of the deck is the draw pile, and its top card is turned up to start the discard pile.</p>
+          <div class="card-row" data-cards="? ? ?" aria-label="Three decks shuffled together"></div>
+        </section>
+
+        <section id="turn">
+          <h2>Your turn</h2>
+          <p>Take one card, either the top of the draw pile or the card just discarded, then throw one card away. You always end your turn holding 21.</p>
+          <p>Play goes round the table until somebody's whole hand is made of sets.</p>
+        </section>
+
+        <section id="sets">
+          <h2>Building sets</h2>
+          <p>Every set is at least three cards. Early in the hand, only <strong>pure</strong> sets count:</p>
+          <dl class="set-defs">
+            <div>
+              <dt>Pure sequence</dt>
+              <dd>Three or more cards in a row, all the same suit.</dd>
+              <dd class="card-row" data-cards="4♥ 5♥ 6♥"></dd>
+            </div>
+            <div>
+              <dt>Tunnela</dt>
+              <dd>Three identical cards: same rank and same suit. Only possible because there are three decks.</dd>
+              <dd class="card-row" data-cards="K♦ K♦ K♦"></dd>
+            </div>
+          </dl>
+          <p>Once you're seen (next section), joker cards can usually stand in for missing cards in your remaining sets. How freely depends on the table.</p>
+        </section>
+
+        <section id="seen">
+          <h2>Getting seen</h2>
+          <p>When you hold three pure sets, lay them down on your turn. You're now <strong>seen</strong>, and you get to look at the joker card in the middle.</p>
+          <p>Being seen matters twice over: only seen players can count maal, and an unseen player pays more when someone else finishes.</p>
+          <div class="seen-demo">
+            <div class="card-row" data-cards="9♣ 10♣ J♣ · 4♥ 5♥ 6♥ · K♦ K♦ K♦"></div>
+            <div class="seen-joker">
+              <div id="seen-joker"></div>
+              <button class="button button-ink" id="seen-flip" type="button">Look at the joker</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="maal">
+          <h2>Tiplu and maal</h2>
+          <p>The joker card is the <strong>tiplu</strong>. It and its neighbours are <strong>maal</strong>, and every point of maal you hold is money from each other player.</p>
+          <div class="maal-explorer">
+            <div class="maal-pick" role="group" aria-label="Pick a tiplu">
+              <div class="pick-row" id="pick-rank" role="radiogroup" aria-label="Rank"></div>
+              <div class="pick-row" id="pick-suit" role="radiogroup" aria-label="Suit"></div>
+            </div>
+            <div class="maal-cards" id="maal-cards" aria-live="polite"></div>
+          </div>
+          <table class="maal-table">
+            <thead><tr><th scope="col">Card</th><th scope="col">What it is</th><th scope="col">Maal</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Tiplu</th><td>The joker card itself</td><td>3</td></tr>
+              <tr><th scope="row">Jhiplu</th><td>One below the tiplu, same suit</td><td>2</td></tr>
+              <tr><th scope="row">Poplu</th><td>One above the tiplu, same suit</td><td>2</td></tr>
+              <tr><th scope="row">Alter</th><td>Same rank and colour as the tiplu, other suit</td><td>5</td></tr>
+              <tr><th scope="row">Marriage</th><td>Jhiplu, tiplu and poplu together in one sequence</td><td>10</td></tr>
+            </tbody>
+          </table>
+          <p class="note">These are the common values. Plenty of tables add their own, such as maal for a tunnela you showed. Agree before the first deal.</p>
+        </section>
+
+        <section id="power">
+          <h2>Superman and Putalis</h2>
+          <p>We shuffle four power cards in with the three decks: <strong>one Superman</strong> and <strong>three Putalis</strong>.</p>
+          <div class="card-row" data-cards="SUP · PUT PUT PUT"></div>
+          <table class="maal-table">
+            <thead><tr><th scope="col">Card</th><th scope="col">When</th><th scope="col">Maal</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Superman</th><td>Kept, not used to help show a sequence</td><td>10</td></tr>
+              <tr><th scope="row">One Putali</th><td>On its own</td><td>5</td></tr>
+              <tr><th scope="row">Two Putalis</th><td>Together</td><td>15</td></tr>
+            </tbody>
+          </table>
+          <p class="note">Three Putalis in one hand: agree the value at your table before you start.</p>
+        </section>
+
+        <section id="dublee">
+          <h2>Playing dublee</h2>
+          <p>Instead of sequences, you can collect <strong>dublees</strong>: pairs of identical cards. Show seven dublees and you're seen.</p>
+          <div class="card-row" data-cards="Q♥ Q♥ · 3♣ 3♣ · 8♦ 8♦ · J♠ J♠"></div>
+          <p>At our table a dublee player doesn't pay game points when someone else finishes, and if you finish on dublee everyone pays you 5 extra.</p>
+          <p><a href="/watch">Watch a simulated game</a> to see a dublee player collect their pairs and show.</p>
+        </section>
+
+        <section id="finish">
+          <h2>Finishing a hand</h2>
+          <p>When all your cards are in sets, declare. You've won the hand, and everyone else is marked by how they ended it:</p>
+          <dl class="status-list">
+            <div><dt><span class="status s-seen">Seen</span></dt><dd>Showed three sets. Counts maal, pays the winner 3 game points.</dd></div>
+            <div><dt><span class="status s-unseen">Unseen</span></dt><dd>Never showed. Pays the winner 10 game points.</dd></div>
+            <div><dt><span class="status s-dublee">Dublee</span></dt><dd>Seen on dublees. Counts maal, pays no game points.</dd></div>
+            <div><dt><span class="status s-foul">Foul</span></dt><dd>Declared a hand that wasn't valid. Loses their maal and pays 15.</dd></div>
+            <div><dt><span class="status s-hold">Hold</span></dt><dd>Sat this hand out. Scores 0.</dd></div>
+          </dl>
+        </section>
+
+        <section id="modes">
+          <h2>Murder and kidnap</h2>
+          <p>What happens to an unseen player's maal is the big house rule:</p>
+          <dl class="mode-list">
+            <div><dt>Murder</dt><dd>Their maal counts for nothing. This is how we usually play.</dd></div>
+            <div><dt>Kidnap</dt><dd>The winner takes it and adds it to their own.</dd></div>
+          </dl>
+        </section>
+
+        <section id="points">
+          <h2>Scoring a hand</h2>
+          <p>Everyone settles maal with everyone else. If <var>n</var> people played the hand:</p>
+          <p class="formula">points = <var>n</var> × your maal − total maal − game points you pay</p>
+          <p>The winner collects everyone's game points, so the hand always adds up to zero. Try it with a real hand from our table:</p>
+
+          <form class="calc" id="calc" aria-describedby="calc-help">
+            <p id="calc-help" class="note">Pick the winner, set each player's status and maal. Points update as you go.</p>
+            <div class="calc-mode" role="radiogroup" aria-label="Unseen maal rule">
+              <label><input type="radio" name="mode" value="murder" checked> Murder</label>
+              <label><input type="radio" name="mode" value="kidnap"> Kidnap</label>
+            </div>
+            <table class="calc-table">
+              <thead><tr><th scope="col">Player</th><th scope="col">Won</th><th scope="col">Status</th><th scope="col">Maal</th><th scope="col">Points</th></tr></thead>
+              <tbody id="calc-rows"></tbody>
+            </table>
+            <p class="calc-sum" id="calc-sum" aria-live="polite"></p>
+            <details class="calc-work">
+              <summary>Show the working</summary>
+              <ol id="calc-work"></ol>
+            </details>
+          </form>
+        </section>
+
+        <section id="money">
+          <h2>From points to rupees</h2>
+          <p>Points become money at whatever the table agrees per point. We play at Rs. 10. A night of hands adds up to a final scoreboard, and that's what goes into the <a href="/ledger">ledger</a>, which keeps a running total until everyone settles.</p>
+          <a class="button button-primary" href="/ledger">Open the ledger</a>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>Made for our Marriage nights. Every table plays a little differently; these are our rules.</span>
+      <a href="/ledger">Go to the ledger</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watch a game · Marriage Khata</title>
+  <meta name="description" content="Watch a simulated four-player game of Marriage, card by card: the deal, draws and discards, showing sets, dublee, the declaration and the scores.">
+  <meta name="theme-color" content="#083d2f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Mukta:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/watch.css">
+  <script src="/js/cards.js" defer></script>
+  <script src="/js/sim.js" defer></script>
+  <script src="/js/watch.js" defer></script>
+</head>
+<body class="site">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/"><span class="brand-mark">Marriage <span>Khata</span></span><span class="brand-dev" lang="ne">म्यारिज खाता</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/rules">Rules</a></li>
+        <li><a href="/watch" aria-current="page">Watch</a></li>
+        <li><a class="nav-cta" href="/ledger">Ledger</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="felt watch-head">
+      <div class="wrap">
+        <h1>Watch a game</h1>
+        <p>Four players, a fresh shuffle every time. Follow the whole table or one player, from the cards they're dealt to how they finish.</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="controls" role="toolbar" aria-label="Game controls">
+        <button class="button button-primary" id="play" type="button">Pause</button>
+        <button class="button button-ink" id="step" type="button" disabled>Next move</button>
+        <label class="speed">Speed
+          <select id="speed">
+            <option value="0.6">Slow</option>
+            <option value="1" selected>Normal</option>
+            <option value="2.5">Fast</option>
+          </select>
+        </label>
+        <button class="button button-ink" id="skip" type="button">Skip to the end</button>
+        <button class="button button-ink" id="new" type="button">New game</button>
+      </div>
+
+      <div class="board" id="board">
+        <div class="seat" data-seat="0"></div>
+        <div class="seat" data-seat="1"></div>
+        <div class="center">
+          <div class="pile">
+            <div class="pile-stack" id="pile"></div>
+            <span class="pile-label" id="pile-count"></span>
+          </div>
+          <div class="pile">
+            <div class="pile-stack" id="discard"></div>
+            <span class="pile-label">Discards</span>
+          </div>
+          <div class="pile">
+            <div class="pile-stack" id="tiplu"></div>
+            <span class="pile-label" id="tiplu-label">Joker</span>
+          </div>
+        </div>
+        <div class="seat" data-seat="2"></div>
+        <div class="seat" data-seat="3"></div>
+      </div>
+      <p class="narration" id="narration" aria-live="polite"></p>
+
+      <section class="follow" aria-labelledby="follow-title">
+        <h2 id="follow-title">Follow a player</h2>
+        <div class="follow-tabs" id="tabs" role="tablist" aria-label="Players"></div>
+        <div id="panels"></div>
+      </section>
+
+      <section class="final" id="final" hidden aria-labelledby="final-title">
+        <h2 id="final-title">The scores</h2>
+        <p class="final-note" id="final-note"></p>
+        <div class="table-scroll">
+          <table class="score-table">
+            <thead><tr><th scope="col">Player</th><th scope="col">Finished</th><th scope="col">Maal</th><th scope="col">Points</th><th scope="col">At Rs. 10</th></tr></thead>
+            <tbody id="score-rows"></tbody>
+          </table>
+        </div>
+        <p class="final-how">Points = 4 × own maal − everyone's maal − game points (seen 3, unseen 10, dublee 0). Unseen maal doesn't count. <a href="/rules#points">How scoring works</a></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>Simulated games use our table's rules. Every table plays a little differently.</span>
+      <a href="/rules">Read the rules</a>
+    </div>
+  </footer>
+</body>
+</html>

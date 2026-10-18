@@ -1,0 +1,90 @@
+/* Home page */
+.hero { padding: 48px 0 76px; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 40px; align-items: center; }
+.hero h1 {
+  font-size: clamp(38px, 5.4vw, 64px); line-height: 1.02; font-weight: 800;
+  font-variation-settings: "opsz" 96; margin: 0 0 18px; max-width: 11ch;
+}
+.hero-copy p { font-size: 19px; color: var(--felt-soft); max-width: 34ch; margin: 0 0 26px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* The card table */
+.table { margin: 0; position: relative; }
+.deal {
+  position: relative; height: 330px; border-radius: 28px;
+  background: radial-gradient(ellipse at 50% 35%, #157257, #0b4d3a 70%);
+  box-shadow: inset 0 0 0 10px #5b3a20, inset 0 0 0 12px #3d2614, inset 0 10px 40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+.deal .pc { position: absolute; left: 0; top: 0; transition: transform 0.55s cubic-bezier(.25, .8, .25, 1); will-change: transform; }
+.deal .pc.lift .pc-face { box-shadow: 0 0 0 2px var(--brass), 0 6px 14px rgba(0, 0, 0, 0.35); }
+.set-label {
+  position: absolute; transform: translate(-50%, 0); padding: 1px 7px; border-radius: 6px; z-index: 40;
+  background: rgba(8, 61, 47, 0.85); color: var(--felt-ink); font: 600 13px/1.4 var(--font-body);
+  white-space: nowrap; opacity: 0; transition: opacity 0.3s;
+}
+.set-label.show { opacity: 1; }
+.joker-tag {
+  position: absolute; color: #f7d98a; font: 700 14px/1 var(--font-display); transform: translate(-50%, 0);
+  opacity: 0; transition: opacity 0.3s;
+}
+.joker-tag.show { opacity: 1; }
+.deal-caption { min-height: 3em; margin-top: 12px; color: var(--felt-soft); font-size: 16px; }
+.replay {
+  background: none; border: 0; color: var(--felt-ink); text-decoration: underline; text-underline-offset: 3px;
+  font: 600 15px var(--font-body); cursor: pointer; padding: 4px 0;
+}
+
+/* Running tally — a sheet of the khata pulled out over the felt */
+.tally { margin-top: -44px; position: relative; z-index: 2; }
+.tally-sheet {
+  background: var(--sheet); border: 1px solid var(--sheet-edge); border-radius: 14px;
+  padding: 20px 24px; box-shadow: 0 10px 30px rgba(8, 61, 47, 0.12);
+}
+.tally h2 { margin: 0 0 10px; font-size: 20px; }
+.tally-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0; }
+.tally-grid div { border-left: 2px solid var(--margin-line); padding-left: 12px; min-width: 0; }
+.tally-grid dt { font-size: 14px; color: var(--ink-faint); }
+.tally-grid dd { margin: 2px 0 0; font: 700 22px/1.2 var(--font-display); overflow-wrap: anywhere; }
+.tally-grid dd small { display: block; font: 500 14px/1.3 var(--font-body); color: var(--ink-soft); }
+.tally-grid .up { color: #1d7a3e; }
+.tally-grid .down { color: var(--red); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tally-grid .up { color: #5cc983; } }
+.tally-link { display: inline-block; margin-top: 14px; font-weight: 600; }
+
+/* How it works — a real sequence of steps */
+.steps { margin-top: 64px; }
+.steps h2, .minute h2 { font-size: clamp(26px, 3.4vw, 36px); margin: 0 0 18px; }
+.step-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; counter-reset: step; }
+.step-list li { counter-increment: step; position: relative; padding-top: 58px; }
+.step-list li::before {
+  content: counter(step); position: absolute; top: 0; left: 0;
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  font: 800 22px/1 var(--font-display); color: var(--felt-deep);
+  background: var(--brass); box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35), 0 2px 0 #9a7120;
+}
+.step-list h3 { margin: 0 0 6px; font-size: 20px; }
+.step-list p { margin: 0; color: var(--ink-soft); max-width: 36ch; }
+
+/* Marriage in a minute */
+.minute { margin-top: 72px; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 40px; align-items: center; }
+.minute-text p { max-width: 58ch; color: var(--ink-soft); }
+.minute-text strong { color: var(--ink); }
+.minute-cards {
+  display: flex; justify-content: center; align-items: flex-end; gap: 10px; flex-wrap: wrap;
+  padding: 34px 20px 46px; border-radius: 20px; background: var(--felt); color: var(--felt-ink);
+}
+.minute-cards .pc { --w: 70px; }
+
+@media (max-width: 860px) {
+  .hero-grid, .minute { grid-template-columns: 1fr; }
+  .hero { padding-top: 32px; }
+  .hero h1 { max-width: 14ch; }
+  .deal { height: 270px; border-radius: 22px; }
+  .tally-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step-list { grid-template-columns: 1fr; gap: 22px; }
+}
+@media (max-width: 420px) {
+  .minute-cards .pc { --w: 56px; }
+}
+.minute-actions { display: flex; flex-wrap: wrap; gap: 10px; }
